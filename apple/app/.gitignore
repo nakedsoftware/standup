@@ -1,5 +1,3 @@
-#!/usr/bin/env pwsh
-
 # Copyright 2025 Naked Software, LLC
 #
 # Version 1.0.0 (June 28, 2025)
@@ -90,37 +88,6 @@
 # By using the Software, you acknowledge that you have read this Agreement,
 # understand it, and agree to be bound by its terms and conditions.
 
-<#
-.SYNOPSIS
-    Performs one-time set up of the local Git repository.
-
-.DESCRIPTION
-    This script performs a one-time set up of the local Git repository for
-    developers. This script will install all external dependencies and will
-    generate any source code or project files that are required to build and
-    run the Naked Standup product.
-#>
-
-$ErrorActionPreference = 'Stop'
-
-# Install the Git LFS filters into the local Git repository
-git lfs install --skip-repo
-git lfs pull
-
-# Install the NPM dependencies and configure Husky
-npm ci
-
-# Install Tuist using Mise if running on macOS
-if ($IsMacOS) {
-    mise install
-}
-
-# Generate the Xcode workspace and project files
-if ($IsMacOS) {
-    Push-Location "ios/app"
-    try {
-        tuist generate --no-open
-    } finally {
-        Pop-Location
-    }
-}
+*.xcworkspace/
+*.xcodeproj/
+Derived/

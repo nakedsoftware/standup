@@ -90,3 +90,6 @@
 
 [settings]
 disable_tools = ["node"]
+
+[tools]
+tuist = "4.55.0"
