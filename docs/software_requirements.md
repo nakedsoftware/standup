@@ -176,6 +176,7 @@ fnm use
 ### Visual Studio Code
 
 | Operating System | Required? |
+| ---------------- | --------- |
 | Apple macOS | :white_check_mark: |
 | Linux | :white_check_mark: |
 | Microsoft Windows | :white_check_mark: |
@@ -183,5 +184,11 @@ fnm use
 [Visual Studio Code](https://code.visualstudio.com) is a free and open source text editor and development environment created and maintained by [Microsoft](https://www.microsoft.com). Visual Studio Code provides a rich extension ecosystem that adds support for different programming languages and software development tools. Visual Studio Code can be installed by downloading the installer from the [Visual Studio Code website](httos://code.visualstudio.com).
 
 ### Remote Development Extension Pack for Visual Studio Code
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :white_check_mark: |
+| Linux | :white_check_mark: |
+| Microsoft Windows | :white_check_mark: |
 
 [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extends [Visual Studio Code](#visual-studio-code) with tools that allow for connecting to and developing on remote machines or environments. This extension pack also includes support for building and running development containers locally and installing a server component that will allow Visual Studio Code to interact with the development container. Remote Development Extension Pack can be installed from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack).
