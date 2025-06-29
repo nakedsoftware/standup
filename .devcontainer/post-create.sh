@@ -1,4 +1,6 @@
-#!/usr/bin/env pwsh
+#!/usr/bin/env bash
+
+#!/bin/bash
 
 # Copyright 2025 Naked Software, LLC
 #
@@ -90,22 +92,15 @@
 # By using the Software, you acknowledge that you have read this Agreement,
 # understand it, and agree to be bound by its terms and conditions.
 
-<#
-.SYNOPSIS
-    Performs one-time set up of the local Git repository.
+# post-create.sh
+#
+# This script is executed to perform additional setup after the container is
+# created.
 
-.DESCRIPTION
-    This script performs a one-time set up of the local Git repository for
-    developers. This script will install all external dependencies and will
-    generate any source code or project files that are required to build and
-    run the Naked Standup product.
-#>
+set -e
 
-$ErrorActionPreference = 'Stop'
+# Configure the /workspace directory as a safe directory for Git
+git config --global --add safe.directory /workspace
 
-# Install the Git LFS filters into the local Git repository
-git lfs install --skip-repo
-git lfs pull
-
-# Install the NPM dependencies and configure Husky
-npm ci
+# Set up the development container environment.
+./do setup

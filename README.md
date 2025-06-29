@@ -53,3 +53,12 @@ The `<command>` parameter can be one of the following:
 - `build`: compiles all of the source code to ensure that the source code is configured correctly and does not contain any syntax or language errors.
 - `test`: runs the automated test suites to ensure that the source code does not have any breaking errors.
 - `start`: runs the Naked Standup services locally for debugging and testing.
+
+### Using the Development Container
+
+Naked Standup makes use of [development containers](https://containers.dev) for web, API, and backend service development and testing. It is recommended that you use the development container when possible. Frontend applications support communicating with the backend services running in the development container using port forwarding between the host machine and the development container, or using [ngrok](https://ngrok.com) to expose the APIs and services using a secure tunnel.
+
+When opening the repository in [Visual Studio Code](https://code.visualstudio.com), Visual Studio Code should recognize the `.devcontainer` folder that contains the development container specification and should prompt you to reopen the repository inside of the development container. If you choose to reopen the repository in the development container, Visual Studio Code will start the development container and connect to it so that you can develop and test Naked Standup inside of the container.
+
+![Opening the development container](assets/devcontainer.gif)
+
