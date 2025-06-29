@@ -21,7 +21,7 @@ Naked Standup requires that you have the following software installed in your de
 1. [Node.js](#nodejs)
 1. [Docker Desktop](#docker-desktop)
 1. [Visual Studio Code](#visual-studio-code)
-1. [Remote Development Extension Pack for Visual Studio Code]()
+1. [Remote Development Extension Pack for Visual Studio Code](#remote-development-extension-pack-for-visual-studio-code)
 
 ### Homebrew
 
