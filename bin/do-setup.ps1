@@ -102,3 +102,6 @@
 #>
 
 $ErrorActionPreference = 'Stop'
+
+# Install the NPM dependencies and configure Husky
+npm ci
