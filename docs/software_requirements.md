@@ -14,6 +14,7 @@ Naked Standup requires that you have the following software installed in your de
 
 1. [Homebrew](#homebrew)
 1. [Git](#git)
+1. [Git LFS](#git-lfs)
 1. [GitHub CLI](#github-cli)
 1. [PowerShell](#powershell)
 1. [Fast Node Manager](#fast-node-manager)
@@ -56,6 +57,24 @@ brew install git
 ```batch
 winget install --id Git.Git -e --source winget
 ```
+
+### Git LFS
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :white_check_mark: |
+| Linux | :white_check_mark: |
+| Microsoft Windows | :white_check_mark: |
+
+[Git LFS](https://git-lfs.com/) is an extension for [Git](#git) that is used to store large, non-versionable files in blob storage outside of the Git repository. By using external storage to store larger or unversionable files like images, the size of the Git repository can be kept manageable and large binary objects or documents are not being stored and processed by Git.
+
+- __Apple macOS or Linux__: Git LFS can be installed using [Homebrew](#homebrew). In a terminal, run:
+
+```shell
+brew install git-lfs
+```
+
+- __Microsoft Windows__: Git LFS is included in the [Git](#git) installation package for Windows and does not need to be installed separately.
 
 ### GitHub CLI
 

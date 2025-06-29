@@ -101,5 +101,9 @@
 
 set -e
 
+# Install the Git LFS filters into the local Git repository
+git lfs install --skip-repo
+git lfs pull
+
 # Install the NPM dependencies and configure Husky
 npm ci

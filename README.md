@@ -53,3 +53,8 @@ The `<command>` parameter can be one of the following:
 - `build`: compiles all of the source code to ensure that the source code is configured correctly and does not contain any syntax or language errors.
 - `test`: runs the automated test suites to ensure that the source code does not have any breaking errors.
 - `start`: runs the Naked Standup services locally for debugging and testing.
+
+### Using the Development Container
+
+Naked Standup makes use of [development containers](https://containers.dev) for web, API, and backend service development and testing. It is recommended that you use the development container when possible. Frontend applications support communicating with the backend services running in the development container using port forwarding between the host machine and the development container, or using [ngrok](https://ngrok.com) to expose the APIs and services using a secure tunnel.
+
