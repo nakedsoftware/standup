@@ -16,6 +16,8 @@ Naked Standup requires that you have the following software installed in your de
 1. [Git](#git)
 1. [GitHub CLI](#github-cli)
 1. [PowerShell](#powershell)
+1. [Fast Node Manager](#fast-node-manager)
+1. [Node.js](#nodejs)
 
 ### Homebrew
 
@@ -99,4 +101,30 @@ brew install --cask powershell
 
 ```batch
 winget install --id Microsoft.PowerShell --source winget
+```
+
+### Fast Node Manager
+
+[Fast Node Manager](https://github.com/Schniz/fnm) is a version manager for [Node.js](https://nodejs.org). Fast Node Manager can be used to install and manage multiple versions of Node.js and can switch between them as necessary for different projects. Naked Standup stores the currently supported version of Node.is in the [`.node-version`](../.node-version) file in the root directory of the Git repository. When Fast Node Manager is integrated into the shell, Fast Node Manager will automatically switch to that version of Node.js to ensure that developers are working with the correct Node.js version.
+
+- __Apple macOS or Linux__: Fast Node Manager uses an installation script that will internally use [Homebrew](#homebrew) to install Fast Node Manager. In a terminal, run:
+
+```shell
+curl -fsSL https://fnm.vercel.app/install | bash
+```
+
+- __Microsoft Windows__: Fast Node Manager can be installed using [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/). In a Command Prompt or PowerShell window, run:
+
+```batch
+winget install Schniz.fnm
+```
+
+### Node.js
+
+[Node.js](https://node.js) is a platform and runtime environment for programs written in JavaScript. Node.js is useful for development tools and is also used for building backend services. Node.js is used mostly for running development tools needed by the Naked Standup product.
+
+Node.js is installed using [Fast Node Manager](#fast-node-manager). In a terminal, navigate to the repository directory and run:
+
+```shell
+fnm use
 ```

@@ -100,3 +100,6 @@
 # Usage: ./do setup
 
 set -e
+
+# Install the NPM dependencies and configure Husky
+npm ci
