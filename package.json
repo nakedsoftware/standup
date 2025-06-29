@@ -1,0 +1,52 @@
+{
+  "name": "@nakedsoftware/standup",
+  "version": "0.1.0",
+  "description": "Naked Standup is a tool for individuals or distributed teams to use to track their daily progress and share updates with others",
+  "keywords": [
+    "agile",
+    "communication",
+    "development",
+    "engineering",
+    "productivity",
+    "project",
+    "scrum",
+    "software",
+    "standup",
+    "video"
+  ],
+  "homepage": "https://www.nakedstandup.app",
+  "bugs": {
+    "email": "support@naked.software",
+    "url": "https://github.com/nakedsoftware/standup/issues"
+  },
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Michael Collins",
+    "email": "michael.collins@naked.software",
+    "url": "https://michaelfcollins3.dev"
+  },
+  "repository": "github:nakedsoftware/standup",
+  "scripts": {
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "husky": "^9.1.7"
+  },
+  "engines": {
+    "node": "22.17.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "onFail": "error"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "22.17.0",
+      "onFail": "warn"
+    }
+  },
+  "private": true
+}
