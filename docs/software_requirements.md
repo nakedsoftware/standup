@@ -19,6 +19,9 @@ Naked Standup requires that you have the following software installed in your de
 1. [PowerShell](#powershell)
 1. [Fast Node Manager](#fast-node-manager)
 1. [Node.js](#nodejs)
+1. [Docker Desktop](#docker-desktop)
+1. [Visual Studio Code](#visual-studio-code)
+1. [Remote Development Extension Pack for Visual Studio Code]()
 
 ### Homebrew
 
@@ -124,6 +127,12 @@ winget install --id Microsoft.PowerShell --source winget
 
 ### Fast Node Manager
 
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :white_check_mark: |
+| Linux | :white_check_mark: |
+| Microsoft Windows | :white_check_mark: |
+
 [Fast Node Manager](https://github.com/Schniz/fnm) is a version manager for [Node.js](https://nodejs.org). Fast Node Manager can be used to install and manage multiple versions of Node.js and can switch between them as necessary for different projects. Naked Standup stores the currently supported version of Node.is in the [`.node-version`](../.node-version) file in the root directory of the Git repository. When Fast Node Manager is integrated into the shell, Fast Node Manager will automatically switch to that version of Node.js to ensure that developers are working with the correct Node.js version.
 
 - __Apple macOS or Linux__: Fast Node Manager uses an installation script that will internally use [Homebrew](#homebrew) to install Fast Node Manager. In a terminal, run:
@@ -140,6 +149,12 @@ winget install Schniz.fnm
 
 ### Node.js
 
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :white_check_mark: |
+| Linux | :white_check_mark: |
+| Microsoft Windows | :white_check_mark: |
+
 [Node.js](https://node.js) is a platform and runtime environment for programs written in JavaScript. Node.js is useful for development tools and is also used for building backend services. Node.js is used mostly for running development tools needed by the Naked Standup product.
 
 Node.js is installed using [Fast Node Manager](#fast-node-manager). In a terminal, navigate to the repository directory and run:
@@ -147,3 +162,26 @@ Node.js is installed using [Fast Node Manager](#fast-node-manager). In a termina
 ```shell
 fnm use
 ```
+
+### Docker Desktop
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :white_check_mark: |
+| Linux | :x: |
+| Microsoft Windows | :white_check_mark: |
+
+[Docker Desktop](https://www.docker.com/products/docker-desktop/) provides the tools to build and run containers on a desktop or laptop computer. Docker Desktop is intended to be run locally and used by software developers or individual users for running containerized software. Docker Desktop is needed to run development containers. Docker Desktop can be installed by downloading the installer from the [Docker website](https://www.docker.com/products/docker-desktop/).
+
+### Visual Studio Code
+
+| Operating System | Required? |
+| Apple macOS | :white_check_mark: |
+| Linux | :white_check_mark: |
+| Microsoft Windows | :white_check_mark: |
+
+[Visual Studio Code](https://code.visualstudio.com) is a free and open source text editor and development environment created and maintained by [Microsoft](https://www.microsoft.com). Visual Studio Code provides a rich extension ecosystem that adds support for different programming languages and software development tools. Visual Studio Code can be installed by downloading the installer from the [Visual Studio Code website](httos://code.visualstudio.com).
+
+### Remote Development Extension Pack for Visual Studio Code
+
+[Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extends [Visual Studio Code](#visual-studio-code) with tools that allow for connecting to and developing on remote machines or environments. This extension pack also includes support for building and running development containers locally and installing a server component that will allow Visual Studio Code to interact with the development container. Remote Development Extension Pack can be installed from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack).
