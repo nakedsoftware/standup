@@ -169,6 +169,26 @@ let project = Project(
             additionalFiles: [
                 "Standup/README.md",
             ],
+        ),
+        .target(
+            name: "StandupTests",
+            destinations: [
+                .iPad,
+                .iPhone
+            ],
+            product: .unitTests,
+            bundleId: "software.naked.standup.tests",
+            deploymentTargets: .iOS("18.0"),
+            sources: [
+                "StandupTests/Sources/**"
+            ],
+            dependencies: [
+                .external(name: "ViewInspector"),
+                .target(name: "Standup"),
+            ],
+            additionalFiles: [
+                "StandupTests/README.md"
+            ]
         )
     ],
     additionalFiles: [

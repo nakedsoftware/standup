@@ -1,5 +1,3 @@
-// swift-tools-version: 6.2
-
 // Copyright 2025 Naked Software, LLC
 //
 // Version 1.0.0 (June 28, 2025)
@@ -90,17 +88,15 @@
 // By using the Software, you acknowledge that you have read this Agreement,
 // understand it, and agree to be bound by its terms and conditions.
 
-import PackageDescription
+@testable import Standup
+import Testing
+import ViewInspector
 
-let package = Package(
-    name: "Standup",
-    platforms: [
-        .iOS(.v18)
-    ],
-    dependencies: [
-        .package(
-            url: "https://github.com/nalexn/ViewInspector.git",
-            branch: "0.10.3"
-        )
-    ]
-)
+@MainActor
+struct MainViewTests {
+    @Test func testViewShowsNakedStandupText() async throws {
+        let sut = MainView()
+		let text = try sut.inspect().text().string()
+		#expect(text == "Naked Standup")
+    }
+}
