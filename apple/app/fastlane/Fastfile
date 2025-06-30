@@ -1,5 +1,3 @@
-#!/usr/bin/env pwsh
-
 # Copyright 2025 Naked Software, LLC
 #
 # Version 1.0.0 (June 28, 2025)
@@ -90,42 +88,92 @@
 # By using the Software, you acknowledge that you have read this Agreement,
 # understand it, and agree to be bound by its terms and conditions.
 
-<#
-.SYNOPSIS
-    Performs one-time set up of the local Git repository.
-
-.DESCRIPTION
-    This script performs a one-time set up of the local Git repository for
-    developers. This script will install all external dependencies and will
-    generate any source code or project files that are required to build and
-    run the Naked Standup product.
-#>
-
-$ErrorActionPreference = 'Stop'
-
-# Install the Git LFS filters into the local Git repository
-git lfs install --skip-repo
-git lfs pull
-
-# Install the NPM dependencies and configure Husky
-npm ci
-
-# Install Fastlane Tools if running on macOS
-if ($IsMacOS) {
-    bundle install
+api_key = {
+    key_id: ENV["APPLE_KEY_ID"],
+    issuer_id: ENV["APPLE_ISSUER_ID"],
+    key: ENV["APPLE_API_KEY"],
+    in_house: false
 }
 
-# Install Tuist using Mise if running on macOS
-if ($IsMacOS) {
-    mise install
-}
+lane :create_application do
+    produce(
+        app_name: "Naked Standup",
+        app_version: "0.1.0",
+        language: "en-US",
+        company_name: "Naked Software, LLC",
+        enable_services: {
+            access_wifi: "off",
+            app_group: "off",
+            apple_pay: "off",
+            associated_domains: "off",
+            auto_fill_credential: "off",
+            class_kit: "off",
+            data_protection: "off",
+            game_center: "ios",
+            health_kit: "off",
+            home_kit: "off",
+            hotspot: "off",
+            icloud: "cloudkit",
+            in_app_purchase: "on",
+            inter_app_audio: "off",
+            multipath: "off",
+            network_extension: "off",
+            nfc_tag_reading: "off",
+            personal_vpn: "off",
+            passbook: "off",
+            push_notification: "off",
+            siri_kit: "off",
+            vpn_configuration: "off",
+            wallet: "off",
+            wireless_accessory: "off"
+        }
+    )
+end
 
-# Generate the Xcode workspace and project files
-if ($IsMacOS) {
-    Push-Location "apple/app"
-    try {
-        tuist generate --no-open
-    } finally {
-        Pop-Location
-    }
-}
+lane :update_code_signing do
+    register_devices(
+        devices_file: "devices.txt",
+        api_key: api_key
+    )
+    match(type: "development")
+    match(type: "adhoc")
+    match(type: "appstore")
+end
+
+lane :build_for_dev do
+    match(
+        type: "development",
+        readonly: true
+    )
+    gym(
+        configuration: "Debug",
+        output_directory: "build/debug/dist",
+        export_method: "development",
+        derived_data_path: "build/debug/derived_data"
+    )
+end
+
+lane :build_for_qa do
+    match(
+        type: "adhoc",
+        readonly: true
+    )
+    gym(
+        configuration: "QA",
+        output_directory: "build/qa/dist",
+        export_method: "ad-hoc",
+        derived_data_path: "build/qa/derived_data"
+    )
+end
+
+lane :build_for_appstore do
+    match(
+        type: "appstore",
+        readonly: true
+    )
+    gym(
+        output_directory: "build/appstore/dist",
+        export_method: "app-store",
+        derived_data_path: "build/appstore/derived_data"
+    )
+end

@@ -154,7 +154,11 @@ let project = Project(
                 )
             ],
             settings: .settings(
-                base: .init()
+                base: [
+                    "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS": true,
+                    "ENABLE_APP_SANDBOX": false,
+                    "ENABLE_USER_SCRIPT_SANDBOXING": false
+                ]
                     .appleGenericVersioningSystem()
                     .automaticCodeSigning(devTeam: "NZXG7K5N83")
                     .currentProjectVersion("1")
@@ -162,12 +166,38 @@ let project = Project(
                     .marketingVersion("0.1.0")
                     .swiftVersion("6.2"),
                 configurations: [
-                    .debug(name: .debug),
-                    .release(name: .release)
+                    .debug(
+                        name: .debug,
+                        settings: .init()
+                            .manualCodeSigning(
+                                identity: "iPhone Developer",
+                                provisioningProfileSpecifier: "match Development software.naked.standup"
+                            ),
+                        xcconfig: "Standup/Config/Debug.xcconfig"
+                    ),
+                    .release(
+                        name: "QA",
+                        settings: .init()
+                            .manualCodeSigning(
+                                identity: "iPhone Distribution",
+                                provisioningProfileSpecifier: "match AdHoc software.naked.standup"
+                            ),
+                        xcconfig: "Standup/Config/QA.xcconfig"
+                    ),
+                    .release(
+                        name: .release,
+                        settings: .init()
+                            .manualCodeSigning(
+                                identity: "iPhone Distribution",
+                                provisioningProfileSpecifier: "match AppStore software.naked.standup"
+                            ),
+                        xcconfig: "Standup/Config/Release.xcconfig"
+                    )
                 ]
             ),
             additionalFiles: [
-                "Standup/README.md",
+                "Standup/Config/Base.xcconfig",
+                "Standup/README.md"
             ],
         ),
         .target(

@@ -25,6 +25,8 @@ Naked Standup requires that you have the following software installed in your de
 1. [mise-en-place](#mise-en-place)
 1. [Xcodes](#xcodes)
 1. [Xcode](#xcode)
+1. [rbenv](#rbenv)
+1. [Ruby](#ruby)
 
 ### Homebrew
 
@@ -233,3 +235,31 @@ To install Xcodes, download the latest release from [Github](https://github.com/
 [Xcode](https://developer.apple.com/xcode) is Apple's development environment for building native applications for Apple macOS, iOS, iPadOS, watchOS, tvOS, and visionOS operating systems and Apple devices. Xcode is not required on Apple macOS for web, API, and service development.
 
 To install Xcode, use [Xcodes](#xcodes).
+
+### rbenv
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :grey_question: |
+| Linux | :x: |
+| Microsoft Windows | :x: |
+
+[rbenv](https://github.com/rbenv/rbenv) is a version manager tool for Ruby. rbenv can install multiple versions of Ruby and switch between them as necessary for different projects. When integrated into your shell, rbenv will automatically switch to the right version of Ruby for a project if it finds a `.ruby-version` file in the current directory or a parent directory.
+
+rbenv can be installed using [Homebrew](#homebrew). In a terminal, run:
+
+    brew install rbenv
+
+### Ruby
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :grey_question: |
+| Linux | :x: |
+| Microsoft Windows | :x: |
+
+[Ruby](https://www.ruby-lang.org/en/) is a dynamic programming language that is popular for open source tools and for building web applications. Ruby is needed for Apple macOS and device development for [Fastlane Tools](https://fastlane.tools). Fastlane Tools are used to build the Naked Standup applications for Apple devices and publish them to the Apple App Store.
+
+Ruby is installed using [rbenv](#rbenv). You can install the correct version, if necessary, by opening a terminal, navigating to the repository directory, and running:
+
+    rbenv install
