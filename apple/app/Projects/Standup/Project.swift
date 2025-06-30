@@ -127,8 +127,31 @@ let project = Project(
             resources: [
                 "Standup/Resources/**"
             ],
+            scripts: [
+                .post(
+                    script: """
+                        export REVEAL_SERVER_FILENAME="RevealServer.xcframework"
+
+                        # Update this path to point to the location of RevealServer.xcframework in your project.
+                        export REVEAL_SERVER_PATH="${SRCROOT}/../../Frameworks/${REVEAL_SERVER_FILENAME}"
+
+                        # If RevealServer.xcframework exists at the specified path, run the integration script.
+                        if [ -d "${REVEAL_SERVER_PATH}" ]; then
+                         "${REVEAL_SERVER_PATH}/Scripts/integrate_revealserver.sh"
+                        else
+                         echo "Reveal Server not loaded into ${TARGET_NAME}: ${REVEAL_SERVER_FILENAME} could not be found."
+                        fi
+                        """,
+                    name: "Integrate Reveal Server",
+                    basedOnDependencyAnalysis: false
+                )
+            ],
             dependencies: [
-                .package(product: "SwiftLintBuildToolPlugin", type: .plugin)
+                .package(product: "SwiftLintBuildToolPlugin", type: .plugin),
+                .xcframework(
+                    path: "../../Frameworks/RevealServer.xcframework",
+                    status: .optional
+                )
             ],
             settings: .settings(
                 base: .init()
