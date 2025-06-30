@@ -101,6 +101,12 @@ let project = Project(
             wrapsLines: true
         )
     ),
+    packages: [
+        .remote(
+            url: "https://github.com/SimplyDanny/SwiftLintPlugins",
+            requirement: .exact("0.59.1")
+        )
+    ],
     targets: [
         .target(
             name: "Standup",
@@ -120,6 +126,9 @@ let project = Project(
             ],
             resources: [
                 "Standup/Resources/**"
+            ],
+            dependencies: [
+                .package(product: "SwiftLintBuildToolPlugin", type: .plugin)
             ],
             settings: .settings(
                 base: .init()

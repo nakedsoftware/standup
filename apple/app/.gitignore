@@ -91,3 +91,4 @@
 *.xcworkspace/
 *.xcodeproj/
 Derived/
+.package.resolved
