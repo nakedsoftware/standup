@@ -88,123 +88,57 @@
 # By using the Software, you acknowledge that you have read this Agreement,
 # understand it, and agree to be bound by its terms and conditions.
 
-api_key = {
-    key_id: ENV["APPLE_KEY_ID"],
-    issuer_id: ENV["APPLE_ISSUER_ID"],
-    key: ENV["APPLE_API_KEY"],
-    in_house: false
-}
+name: Naked Standup iOS App
 
-lane :create_application do
-    produce(
-        app_name: "Naked Standup",
-        app_version: "0.1.0",
-        language: "en-US",
-        company_name: "Naked Software, LLC",
-        enable_services: {
-            access_wifi: "off",
-            app_group: "off",
-            apple_pay: "off",
-            associated_domains: "off",
-            auto_fill_credential: "off",
-            class_kit: "off",
-            data_protection: "off",
-            game_center: "ios",
-            health_kit: "off",
-            home_kit: "off",
-            hotspot: "off",
-            icloud: "cloudkit",
-            in_app_purchase: "on",
-            inter_app_audio: "off",
-            multipath: "off",
-            network_extension: "off",
-            nfc_tag_reading: "off",
-            personal_vpn: "off",
-            passbook: "off",
-            push_notification: "off",
-            siri_kit: "off",
-            vpn_configuration: "off",
-            wallet: "off",
-            wireless_accessory: "off"
-        }
-    )
-end
-
-lane :update_code_signing do
-    register_devices(
-        devices_file: "devices.txt",
-        api_key: api_key
-    )
-    match(type: "development")
-    match(type: "adhoc")
-    match(type: "appstore")
-end
-
-lane :build_for_dev do
-    match(
-        type: "development",
-        readonly: true
-    )
-    gym(
-        configuration: "Debug",
-        output_directory: "build/debug/dist",
-        export_method: "development",
-        derived_data_path: "build/debug/derived_data"
-    )
-end
-
-lane :set_build_number do
-    increment_build_number(
-        build_number: ENV["GITHUB_RUN_NUMBER"],
-        xcodeproj: "Projects/Standup/Standup.xcodeproj"
-    )
-end
-
-lane :build_for_appstore do
-    match(
-        type: "appstore",
-        readonly: true
-    )
-    gym(
-        output_directory: "build/appstore/dist",
-        export_method: "app-store",
-        derived_data_path: "build/appstore/derived_data"
-    )
-end
-
-lane :ci_build_for_appstore do
-    setup_ci(force: true)
-    build_for_appstore
-end
-
-lane :publish_to_testflight do
-    pilot(
-        api_key: api_key,
-        apple_id: ENV["APPLE_ID"],
-        ipa: "build/appstore/dist/Standup.ipa",
-        demo_account_required: false,
-        beta_app_review_info: {
-            contact_email: "michael.collins@naked.software",
-            contact_first_name: "Michael",
-            contact_last_name: "Collins",
-            contact_phone: "+16232975498",
-            notes: ""
-        },
-        localized_app_info: {
-            "default": {
-                feedback_email: "support@naked.software",
-                "marketing_url": "https://www.nakedstandup.app",
-                privacy_policy_url: "",
-                description: "Naked Standup helps individuals and distributed teams to stay on track, keep their commitments, and communicate effectively about the progress that they are achieving on projects"
-            }
-        },
-        localized_build_info: {
-            "default": {
-                whats_new: ""
-            }
-        },
-        beta_app_feedback_email: "support@naked.software",
-        changelog: "",
-        uses_non_exempt_encryption: false
-    )
-end
+on:
+    workflow_dispatch:
+   
+permissions:
+    contents: read
+    
+jobs:
+    testflight:
+        name: Publish Naked Standup to TestFlight
+        runs-on: macos-15
+        steps:
+            - name: Clone the repository
+              uses: actions/checkout@v4
+              with:
+                lfs: true
+            - name: Setup Xcode
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                xcode-version: '26.0'
+            - name: Setup Ruby
+              uses: ruby/setup-ruby@v1
+              with:
+                bundler-cache: true
+            - name: Install Tuist
+              uses: jdx/mise-action@v2
+              env:
+                MISE_VERBOSE: 1
+            - name: Install Dependencies
+              run: tuist install
+              working-directory: apple/app
+            - name: Generate the Xcode Workspace
+              run: tuist generate --no-open
+              working-directory: apple/app
+            - name: Set the Build Number
+              run: bundle exec fastlane set_build_number
+              working-directory: apple/app
+            - name: Build the Naked Standup iOS App
+              run: bundle exec fastlane ci_build_for_appstore
+              working-directory: apple/app
+              env:
+                APPLE_KEY_ID: ${{ vars.APPLE_KEY_ID }}
+                APPLE_ISSUER_ID: ${{ vars.APPLE_ISSUER_ID }}
+                APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+                MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+                MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+            - name: Upload Naked Standup to TestFlight
+              run: bundle exec fastlane publish_to_testflight
+              working-directory: apple/app
+              env:
+                APPLE_KEY_ID: ${{ vars.APPLE_KEY_ID }}
+                APPLE_ISSUER_ID: ${{ vars.APPLE_ISSUER_ID }}
+                APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
