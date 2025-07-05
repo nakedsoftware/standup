@@ -107,3 +107,21 @@ git lfs pull
 
 # Install the NPM dependencies and configure Husky
 npm ci
+
+# Install Fastlane Tools if running on macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+  bundle install
+fi
+
+# Install Tuist using Mise if running on macOS
+if [[ "$(uname)" == "Darwin" ]]; then
+  mise install
+fi
+
+# Generate the Xcode workspace and project files
+if [[ "$(uname)" == "Darwin" ]]; then
+  pushd apple/app > /dev/null
+  tuist install
+  tuist generate --no-open
+  popd > /dev/null
+fi

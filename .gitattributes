@@ -97,3 +97,12 @@
 # Store the larger non-versionable media files in large file storage.
 *.gif filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
+
+# Store the Reveal Server frameworks in large file storage.
+apple/app/Frameworks/RevealServer.xcframework/tvos-arm64/RevealServer.framework/RevealServer filter=lfs diff=lfs merge=lfs -text
+apple/app/Frameworks/RevealServer.xcframework/tvos-arm64_x86_64-simulator/RevealServer.framework/RevealServer filter=lfs diff=lfs merge=lfs -text
+apple/app/Frameworks/RevealServer.xcframework/ios-arm64_x86_64-simulator/RevealServer.framework/RevealServer filter=lfs diff=lfs merge=lfs -text
+apple/app/Frameworks/RevealServer.xcframework/ios-arm64_x86_64-maccatalyst/RevealServer.framework/Versions/A/RevealServer filter=lfs diff=lfs merge=lfs -text
+apple/app/Frameworks/RevealServer.xcframework/xros-arm64/RevealServer.framework/RevealServer filter=lfs diff=lfs merge=lfs -text
+apple/app/Frameworks/RevealServer.xcframework/xros-arm64_x86_64-simulator/RevealServer.framework/RevealServer filter=lfs diff=lfs merge=lfs -text
+apple/app/Frameworks/RevealServer.xcframework/ios-arm64/RevealServer.framework/RevealServer filter=lfs diff=lfs merge=lfs -text

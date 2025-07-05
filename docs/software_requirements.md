@@ -22,6 +22,11 @@ Naked Standup requires that you have the following software installed in your de
 1. [Docker Desktop](#docker-desktop)
 1. [Visual Studio Code](#visual-studio-code)
 1. [Remote Development Extension Pack for Visual Studio Code](#remote-development-extension-pack-for-visual-studio-code)
+1. [mise-en-place](#mise-en-place)
+1. [Xcodes](#xcodes)
+1. [Xcode](#xcode)
+1. [rbenv](#rbenv)
+1. [Ruby](#ruby)
 
 ### Homebrew
 
@@ -192,3 +197,69 @@ fnm use
 | Microsoft Windows | :white_check_mark: |
 
 [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extends [Visual Studio Code](#visual-studio-code) with tools that allow for connecting to and developing on remote machines or environments. This extension pack also includes support for building and running development containers locally and installing a server component that will allow Visual Studio Code to interact with the development container. Remote Development Extension Pack can be installed from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack).
+
+### mise-en-place
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :grey_question: |
+| Linux | :x: |
+| Microsoft Windows | :x: |
+
+[mise-en-place](https://mise.jdx.dev/) is a package and version manager for software developers and is used to install and manage multiple versions of programming languages and development tools.
+
+mise-en-place is only required if you will be working on the iOS, iPadOS, watchOS, tvOS, or visionOS applications. For web, API and service development, mise-en-place is not required on Apple macOS. To install mise-en-place, open a terminal and run:
+
+    curl https://mise.run | sh
+
+### Xcodes
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :grey_question: |
+| Linux | :x: |
+| Microsoft Windows | :x: |
+
+[Xcodes](https://github.com/XcodesOrg/XcodesApp) is a version management and installation tool for [Apple Xcode](https://developer.apple.com/xcode). The Naked Standup team uses Xcodes to download, install, and switch between different versions of Xcode for development. Xcodes is only required if you will be working on the iOS, iPadOS, watchOS, tvOS, or visionOS applications. For web, API, and service development, Xcodes is not required on Apple macOS.
+
+To install Xcodes, download the latest release from [Github](https://github.com/XcodesOrg/XcodesApp).
+
+### Xcode
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :grey_question: |
+| Linux | :x: |
+| Microsoft Windows | :x: |
+
+[Xcode](https://developer.apple.com/xcode) is Apple's development environment for building native applications for Apple macOS, iOS, iPadOS, watchOS, tvOS, and visionOS operating systems and Apple devices. Xcode is not required on Apple macOS for web, API, and service development.
+
+To install Xcode, use [Xcodes](#xcodes).
+
+### rbenv
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :grey_question: |
+| Linux | :x: |
+| Microsoft Windows | :x: |
+
+[rbenv](https://github.com/rbenv/rbenv) is a version manager tool for Ruby. rbenv can install multiple versions of Ruby and switch between them as necessary for different projects. When integrated into your shell, rbenv will automatically switch to the right version of Ruby for a project if it finds a `.ruby-version` file in the current directory or a parent directory.
+
+rbenv can be installed using [Homebrew](#homebrew). In a terminal, run:
+
+    brew install rbenv
+
+### Ruby
+
+| Operating System | Required? |
+| ---------------- | --------- |
+| Apple macOS | :grey_question: |
+| Linux | :x: |
+| Microsoft Windows | :x: |
+
+[Ruby](https://www.ruby-lang.org/en/) is a dynamic programming language that is popular for open source tools and for building web applications. Ruby is needed for Apple macOS and device development for [Fastlane Tools](https://fastlane.tools). Fastlane Tools are used to build the Naked Standup applications for Apple devices and publish them to the Apple App Store.
+
+Ruby is installed using [rbenv](#rbenv). You can install the correct version, if necessary, by opening a terminal, navigating to the repository directory, and running:
+
+    rbenv install

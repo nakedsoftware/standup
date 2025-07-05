@@ -89,4 +89,7 @@
 # understand it, and agree to be bound by its terms and conditions.
 
 [settings]
-disable_tools = ["node"]
+disable_tools = ["node", "ruby"]
+
+[tools]
+tuist = "4.55.0"

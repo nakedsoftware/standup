@@ -1,0 +1,210 @@
+# Copyright 2025 Naked Software, LLC
+#
+# Version 1.0.0 (June 28, 2025)
+#
+# This Naked Standup License Agreement ("Agreement") is a legal agreement
+# between you ("Licensee") and Naked Software, LLC ("Licensor") for the use
+# of the Naked Standup software product ("Software"). By using the Software,
+# you agree to be bound by the terms of this Agreement.
+#
+# 1. Grant of License
+#
+# Licensor grants Licensee a non-exclusive, non-transferable,
+# non-sublicensable license to use the Software for non-commercial,
+# educational, or other non-production purposes. Licensee may not use the
+# Software for any commercial purposes without purchasing a commercial
+# license from Licensor.
+#
+# 2. Commercial Use
+#
+# To use the Software for commercial purposes, Licensee must purchase a
+# commercial license from Licensor. A commercial license allows Licensee to
+# use the Software in production environments, build their own version, and
+# add custom features or bug fixes. Licensee may not sell the Software or
+# any derivative works to others.
+#
+# 3. Derivative Works
+#
+# Licensee may create derivative works of the Software for their own use,
+# provided that they maintain a valid commercial license. Licensee may not
+# sell or distribute derivative works to others. Any derivative works must
+# include a copy of this Agreement and retain all copyright notices.
+#
+# 4. Sharing and Contributions
+#
+# Licensee may share their changes or bug fixes to the Software with others,
+# provided that such changes are made freely available and not sold.
+# Licensee is encouraged to contribute their bug fixes back to Licensor for
+# inclusion in the Software.
+#
+# 5. Restrictions
+#
+# Licensee may not:
+#
+# - Use the Software for any commercial purposes without a valid commercial
+#   license.
+# - Sell, sublicense, or distribute the Software or any derivative works.
+# - Remove or alter any copyright notices or proprietary legends on the
+#   Software.
+#
+# 6. Termination
+#
+# This Agreement is effective until terminated. Licensor may terminate this
+# Agreement at any time if Licensee breaches any of its terms. Upon
+# termination, Licensee must cease all use of the Software and destroy all
+# copies in their possession.
+#
+# 7. Disclaimer of Warranty
+#
+# The Software is provided "as is" without warranty of any kind, express or
+# implied, including but not limited to the warranties of merchantability,
+# fitness for a particular purpose, and noninfringement. In no event shall
+# Licensor be liable for any claim, damages, or other liability, whether in
+# an action of contract, tort, or otherwise, arising from, out of, or in
+# connection with the Software or the use or other dealings in the Software.
+#
+# 8. Limitation of Liability
+#
+# In no event shall Licensor be liable for any indirect, incidental,
+# special, exemplary, or consequential damages (including, but not limited
+# to, procurement of substitute goods or services; loss of use, data, or
+# profits; or business interruption) however caused and on any theory of
+# liability, whether in contract, strict liability, or tort (including
+# negligence or otherwise) arising in any way out of the use of the
+# Software, even if advised of the possibility of such damage.
+#
+# 9. Governing Law
+#
+# This Agreement shall be governed by and construed in accordance with the
+# laws of the jurisdiction in which Licensor is located, without regard to
+# its conflict of law principles.
+#
+# 10. Entire Agreement
+#
+# This Agreement constitutes the entire agreement between the parties with
+# respect to the Software and supersedes all prior or contemporaneous
+# understandings regarding such subject matter.
+#
+# By using the Software, you acknowledge that you have read this Agreement,
+# understand it, and agree to be bound by its terms and conditions.
+
+api_key = {
+    key_id: ENV["APPLE_KEY_ID"],
+    issuer_id: ENV["APPLE_ISSUER_ID"],
+    key: ENV["APPLE_API_KEY"],
+    in_house: false
+}
+
+lane :create_application do
+    produce(
+        app_name: "Naked Standup",
+        app_version: "0.1.0",
+        language: "en-US",
+        company_name: "Naked Software, LLC",
+        enable_services: {
+            access_wifi: "off",
+            app_group: "off",
+            apple_pay: "off",
+            associated_domains: "off",
+            auto_fill_credential: "off",
+            class_kit: "off",
+            data_protection: "off",
+            game_center: "ios",
+            health_kit: "off",
+            home_kit: "off",
+            hotspot: "off",
+            icloud: "cloudkit",
+            in_app_purchase: "on",
+            inter_app_audio: "off",
+            multipath: "off",
+            network_extension: "off",
+            nfc_tag_reading: "off",
+            personal_vpn: "off",
+            passbook: "off",
+            push_notification: "off",
+            siri_kit: "off",
+            vpn_configuration: "off",
+            wallet: "off",
+            wireless_accessory: "off"
+        }
+    )
+end
+
+lane :update_code_signing do
+    register_devices(
+        devices_file: "devices.txt",
+        api_key: api_key
+    )
+    match(type: "development")
+    match(type: "adhoc")
+    match(type: "appstore")
+end
+
+lane :build_for_dev do
+    match(
+        type: "development",
+        readonly: true
+    )
+    gym(
+        configuration: "Debug",
+        output_directory: "build/debug/dist",
+        export_method: "development",
+        derived_data_path: "build/debug/derived_data"
+    )
+end
+
+lane :set_build_number do
+    increment_build_number(
+        build_number: ENV["GITHUB_RUN_NUMBER"],
+        xcodeproj: "Projects/Standup/Standup.xcodeproj"
+    )
+end
+
+lane :build_for_appstore do
+    match(
+        type: "appstore",
+        readonly: true
+    )
+    gym(
+        output_directory: "build/appstore/dist",
+        export_method: "app-store",
+        derived_data_path: "build/appstore/derived_data"
+    )
+end
+
+lane :ci_build_for_appstore do
+    setup_ci(force: true)
+    build_for_appstore
+end
+
+lane :publish_to_testflight do
+    pilot(
+        api_key: api_key,
+        apple_id: ENV["APPLE_ID"],
+        ipa: "build/appstore/dist/Standup.ipa",
+        demo_account_required: false,
+        beta_app_review_info: {
+            contact_email: "michael.collins@naked.software",
+            contact_first_name: "Michael",
+            contact_last_name: "Collins",
+            contact_phone: "+16232975498",
+            notes: ""
+        },
+        localized_app_info: {
+            "default": {
+                feedback_email: "support@naked.software",
+                "marketing_url": "https://www.nakedstandup.app",
+                privacy_policy_url: "",
+                description: "Naked Standup helps individuals and distributed teams to stay on track, keep their commitments, and communicate effectively about the progress that they are achieving on projects"
+            }
+        },
+        localized_build_info: {
+            "default": {
+                whats_new: ""
+            }
+        },
+        beta_app_feedback_email: "support@naked.software",
+        changelog: "",
+        uses_non_exempt_encryption: false
+    )
+end

@@ -109,3 +109,23 @@ git lfs pull
 
 # Install the NPM dependencies and configure Husky
 npm ci
+
+# Install Fastlane Tools if running on macOS
+if ($IsMacOS) {
+    bundle install
+}
+
+# Install Tuist using Mise if running on macOS
+if ($IsMacOS) {
+    mise install
+}
+
+# Generate the Xcode workspace and project files
+if ($IsMacOS) {
+    Push-Location "apple/app"
+    try {
+        tuist generate --no-open
+    } finally {
+        Pop-Location
+    }
+}
